@@ -1,0 +1,29 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Leitura dos dados do arquivo
+altura_agua = []
+valores_pwm = [[] for _ in range(10)]  # Lista vazia para cada coluna de valores PWM
+
+with open('txt.txt', 'r') as file:
+    for line in file:
+        line = line.strip().split()
+        altura_agua.append(float(line[0]))
+        for i in range(10):
+            valores_pwm[i].append(float(line[i+1]))
+
+# Plot dos pontos de medição para cada coluna de valores PWM
+for i in range(10):
+    plt.scatter(altura_agua, valores_pwm[i], label=f'PWM {i+1}')
+
+# Configurações do gráfico
+plt.xlabel('Altura do Nível da Água')
+plt.ylabel('Valores PWM')
+plt.title('Medições de PWM em função da Altura da Água')
+plt.legend()
+
+# Configuração do eixo horizontal
+plt.xticks(np.arange(0, 23, 1))
+
+# Exibição do gráfico
+plt.show()

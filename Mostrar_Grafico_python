@@ -1,0 +1,30 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# leitura dos dados do arquivo txt.txt e substituição de "," por "."
+with open('txt.txt', 'r') as f:
+    data_str = f.read().replace(',', '.')
+with open('txt.txt', 'w') as f:
+    f.write(data_str)
+
+data = np.loadtxt('txt.txt', delimiter='\t', skiprows=1)
+
+# separação das colunas de dados
+pos = data[:,0]
+m1 = data[:,1]
+
+# definição da equação. Escrever a equacao encontrada outro codigo
+def equation(x):
+    return 0.737*x**2 - 27.45*x + 265.2
+
+# cálculo dos valores ajustados para a curva
+x = np.linspace(pos[0], pos[-1], 100)
+y_fit = equation(x)
+
+# plotagem dos dados e da curva ajustada
+plt.plot(pos, m1, 'o', label='Dados')
+plt.plot(x, y_fit, '-', label='Curva ajustada')
+plt.xlabel('Posição na régua')
+plt.ylabel('Medição M1')
+plt.legend()
+plt.show()

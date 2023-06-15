@@ -1,0 +1,30 @@
+import numpy as np
+
+# leitura dos dados do arquivo txt.txt e substituição de "," por "."
+with open('txt.txt', 'r') as f:
+    data_str = f.read().replace(',', '.')
+with open('txt.txt', 'w') as f:
+    f.write(data_str)
+
+data = np.loadtxt('txt.txt', delimiter='\t', skiprows=1)
+
+# separação das colunas de dados
+pos = data[:,0]
+m1 = data[:,1]
+
+# cálculo da equação que melhor se aproxima dos dados.
+# primeiro grau: deg=1
+# segundo grau: deg=2
+# terceiro grau: deg=3
+
+p = np.polyfit(pos, m1, deg=2)
+equation = np.poly1d(p)
+
+# avaliação da equação nos pontos de posição da régua
+m1_fit = equation(pos)
+
+# impressão do resultado
+print("Equação ajustada para M1: ")
+print(equation)
+print("Valores ajustados para M1: ")
+print(m1_fit)

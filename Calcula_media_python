@@ -1,0 +1,32 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Leitura dos dados do arquivo
+altura_agua = []
+valores_pwm = [[] for _ in range(10)]  # Lista vazia para cada coluna de valores PWM
+
+with open('txt.txt', 'r') as file:
+    for line in file:
+        line = line.strip().split()
+        altura_agua.append(float(line[0]))
+        for i in range(10):
+            valores_pwm[i].append(float(line[i+1]))
+
+# Cálculo da média das medições para cada nível
+media_valores_pwm = []
+for i in range(len(altura_agua)):
+    media = np.mean([valores_pwm[j][i] for j in range(10)])
+    media_valores_pwm.append(media)
+
+# Plot dos pontos da média das medições
+plt.scatter(altura_agua, media_valores_pwm)
+
+# Configurações do gráfico
+plt.xlabel('Altura do Nível da Água')
+plt.ylabel('Média dos Valores PWM')
+plt.title('Média das Medições de PWM em função da Altura da Água')
+
+plt.xticks(np.arange(0, 23, 1))
+
+# Exibição do gráfico
+plt.show()
